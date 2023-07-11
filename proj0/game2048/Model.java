@@ -113,11 +113,45 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        board.setViewingPerspective(side);
+        //first merge
+        for (int i = board.size() - 1; i >= 0 ; i--) {
+            for(int j = 0; j < board.size(); j++){
+                if(board.tile(j , i) == null)continue;
+                else{
+                    for (int k = i - 1; k >= 0; k--) {
+                        if(board.tile(j , k) == null)continue;
+                        if(board.tile(j , i).value() == board.tile(j , k).value()){
+                            board.move(j , i , board.tile(j , k));
+                            score += board.tile(j, i).value();
+                            changed = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        //empty move
+        for (int i = board.size() - 2; i >= 0; i--) {
+            for (int j = 0; j < board.size(); j++) {
+                if(board.tile(j , i) == null)continue;
+                else{
+                    for (int k = board.size() - 1; k > i; k--) {
+                        if(board.tile(j , k) == null){
+                            board.move(j , k , board.tile(j , i));
+                            changed = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
 
         checkGameOver();
         if (changed) {
             setChanged();
         }
+        board.setViewingPerspective(Side.NORTH);
         return changed;
     }
 
@@ -137,7 +171,11 @@ public class Model extends Observable {
      *  Empty spaces are stored as null.
      * */
     public static boolean emptySpaceExists(Board b) {
-        // TODO: Fill in this function.
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if(b.tile(i , j) == null)return true;
+            }
+        }
         return false;
     }
 
@@ -147,7 +185,11 @@ public class Model extends Observable {
      * given a Tile object t, we get its value with t.value().
      */
     public static boolean maxTileExists(Board b) {
-        // TODO: Fill in this function.
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if(b.tile(i , j) != null && b.tile(i , j).value() == MAX_PIECE)return true;
+            }
+        }
         return false;
     }
 
@@ -158,11 +200,50 @@ public class Model extends Observable {
      * 2. There are two adjacent tiles with the same value.
      */
     public static boolean atLeastOneMoveExists(Board b) {
-        // TODO: Fill in this function.
+        return emptySpaceExists(b) || sameValueTileExists(b);
+    }
+
+    public static boolean sameValueTileExists(Board b) {
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size(); j++) {
+                if(adjacentSameValueTileCheck(b , i , j))return true;
+            }
+        }
         return false;
     }
 
+    public static boolean adjacentSameValueTileCheck(Board b , int row , int col) {
+        if(row == 0){
+            if(col == 0){
+                return b.tile(row, col).value() == b.tile(row + 1 , col).value() || b.tile(row, col).value() == b.tile(row, col + 1).value();
+            } else if (col == b.size() - 1) {
+                return b.tile(row, col).value() == b.tile(row + 1, col).value() || b.tile(row , col).value() == b.tile(row, col - 1).value();
+            }else{
+                return b.tile(row, col).value() == b.tile(row , col - 1).value() || b.tile(row, col).value() == b.tile(row, col + 1).value()
+                        || b.tile(row, col).value() == b.tile(row + 1, col).value();
+            }
+        } else if (row == b.size() - 1) {
+            if (col == 0) {
+                return b.tile(row, col).value() == b.tile(row - 1, col).value() || b.tile(row, col).value() == b.tile(row, col + 1).value();
+            } else if (col == b.size() - 1) {
+                return b.tile(row, col).value() == b.tile(row - 1, col).value() || b.tile(row, col).value() == b.tile(row, col - 1).value();
+            } else {
+                return b.tile(row, col).value() == b.tile(row, col - 1).value() || b.tile(row, col).value() == b.tile(row, col + 1).value()
+                        || b.tile(row, col).value() == b.tile(row - 1, col).value();
+            }
 
+        } else if (col == 0) {
+            return b.tile(row, col).value() == b.tile(row, col + 1).value() || b.tile(row, col).value() == b.tile(row - 1, col).value() ||
+                    b.tile(row, col).value() == b.tile(row + 1, col).value();
+        }else if (col == b.size() - 1) {
+            return b.tile(row, col).value() == b.tile(row, col - 1).value() || b.tile(row, col).value() == b.tile(row - 1, col).value() ||
+                    b.tile(row, col).value() == b.tile(row + 1, col).value();
+        }
+        return b.tile(row, col).value() == b.tile(row + 1, col).value() ||
+                b.tile(row, col).value() == b.tile(row - 1, col).value() ||
+                b.tile(row, col).value() == b.tile(row, col + 1).value() ||
+                b.tile(row, col).value() == b.tile(row, col - 1).value();
+    }
     @Override
      /** Returns the model as a string, used for debugging. */
     public String toString() {
