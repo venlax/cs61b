@@ -5,12 +5,12 @@ public class LinkedListDeque<T> {
     private dequeNode<T> first;
     private dequeNode<T> last;
     private int size;
-    <T>LinkedListDeque() {
+    public LinkedListDeque() {
         first = null;
         last = null;
         size = 0;
     }
-    LinkedListDeque(T item){
+    public LinkedListDeque(T item){
         dequeNode<T> temp = new dequeNode<>(item , null,null);
         first = temp;
         last = temp;

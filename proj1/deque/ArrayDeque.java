@@ -12,7 +12,7 @@ public class ArrayDeque<T> {
         private int pos = frontPos;
         
         public T iter;
-        Iterator() {
+        public Iterator() {
             iter = (T)arr[frontPos];
         }
         private void posNext(){
@@ -41,14 +41,14 @@ public class ArrayDeque<T> {
         
         return new Iterator<T>();
     }
-    ArrayDeque() {
+    public ArrayDeque() {
         arr = (T[]) new Object[8];
         size = 0;
         frontPos = 0;
         lastPos = 0;
     }
 
-    ArrayDeque(T item){
+    public ArrayDeque(T item){
         arr = (T[]) new Object[8];
         arr[0] = item;
         frontPos = 0;
