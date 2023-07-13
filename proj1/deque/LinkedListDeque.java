@@ -10,12 +10,12 @@ public class LinkedListDeque<T> {
         last = null;
         size = 0;
     }
-    LinkedListDeque(T item){
-        dequeNode<T> temp = new dequeNode<>(item , null,null);
-        first = temp;
-        last = temp;
-        size = 1;
-    }
+//    LinkedListDeque(T item){
+//        dequeNode<T> temp = new dequeNode<>(item , null,null);
+//        first = temp;
+//        last = temp;
+//        size = 1;
+//    }
     
     public void addFirst(T item){
         if(first == null){
