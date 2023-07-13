@@ -60,7 +60,7 @@ public class ArrayDeque<T> {
         if(size == arr.length){
             resize(size * 2);
         }
-        if(frontPos == 0 && lastPos == 0){
+        if(frontPos == 0 && lastPos == 0 && size == 0){
             arr[0] = item;
             size += 1;
             return;
@@ -74,6 +74,11 @@ public class ArrayDeque<T> {
     public void addLast(T item) {
         if(size == arr.length){
             resize(size * 2);
+        }
+        if(frontPos == 0 && lastPos == 0 && size == 0){
+            arr[0] = item;
+            size += 1;
+            return;
         }
         lastPos++;
         adjust();
@@ -187,18 +192,11 @@ public class ArrayDeque<T> {
     }
     public static void main(String[] args) {
 
-        ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
-        ArrayDeque<Integer> ad2 = new ArrayDeque<Integer>();
-        for (int i = 0; i < 50; i++) {
-            if(i % 2 == 0)ad.addFirst(i);
-            else ad.addLast(i);
+        ArrayDeque<Integer> ad = new  ArrayDeque<Integer>();
+        for (int i = 0; i < 8 ; ++i) {
+            ad.addFirst(i);
         }
-        for (int i = 0; i < 50; i++) {
-            if(i % 2 == 1)ad2.addFirst(i);
-            else ad2.addLast(i);
-        }
-
-        System.out.println(ad.equals("xixi"));
+        ad.printDeque();
     }
 }
 
