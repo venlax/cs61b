@@ -118,7 +118,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
                 temp[count++] = arr[i];
             }
         } else {
-            for (int i = frontPos; i < lastPos; i++) {
+            for (int i = frontPos; i <= lastPos; i++) {
                 temp[count++] = arr[i];
             }
         }
@@ -199,13 +199,28 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return true;
     }
 
-//    public static void main(String[] args) {
-//        ArrayDeque<Integer> lld = new ArrayDeque<Integer>();
-//        lld.addFirst(0);
-//        lld.addFirst(1);
-//        lld.addFirst(2);
-//        lld.removeLast();
-//        lld.removeLast();
-//    }
+    public static void main(String[] args) {
+        ArrayDeque<Integer> lld = new ArrayDeque<Integer>();
+        lld.addFirst(0);
+        lld.addLast(1);
+        lld.addLast(2);
+        System.out.println(lld.removeFirst());     //==> 0
+        lld.addLast(4);
+        System.out.println(lld.get(0));      //==> 1
+        lld.addLast(6);
+        lld.addLast(7);
+        lld.addLast(8);
+        System.out.println(lld.get(0));      //==> 1
+        System.out.println(lld.removeFirst());     //==> 1
+        lld.addFirst(11);
+        lld.addLast(12);
+        System.out.println(lld.removeLast());      //==> 12
+        lld.addFirst(14);
+        lld.addLast(15);
+        System.out.println(lld.get(2));      //==> 2
+        lld.addFirst(17);
+        System.out.println(lld.removeFirst());     //==> 17
+        System.out.println(lld.removeLast());      //==> 15
+    }
 }
 
