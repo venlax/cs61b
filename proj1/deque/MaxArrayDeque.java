@@ -1,5 +1,8 @@
 package deque;
 
+import java.util.Comparator;
+import java.util.Iterator;
+
 public class MaxArrayDeque<T> extends ArrayDeque<T>{
 
     private Comparator<T> comp;
@@ -10,9 +13,10 @@ public class MaxArrayDeque<T> extends ArrayDeque<T>{
     public T max(){
         if(this.size() == 0)return null;
         Iterator<T> iterator = this.iterator();
-        T max = iterator.getVal();
-        while(iterator.next() != null){
-            if(comp.compare(max , iterator.getVal()))max = iterator.getVal();
+        T max = this.get(0);
+        while(iterator.hasNext()){
+            T temp = iterator.next();
+            if(comp.compare(max , temp) < 0)max = temp;
             else{
                 continue;
             }
@@ -23,34 +27,18 @@ public class MaxArrayDeque<T> extends ArrayDeque<T>{
     public T max(Comparator<T> c){
         if(this.size() == 0)return null;
         Iterator<T> iterator = this.iterator();
-        T max = iterator.getVal();
-        while(iterator.next() != null){
-            if(c.compare(max , iterator.getVal()))max = iterator.getVal();
+        T max = this.get(0);
+        while(iterator.hasNext()){
+            T temp = iterator.next();
+            if(c.compare(max , temp) < 0)max = temp;
             else{
                 continue;
             }
         }
         return max;
-
     }
     public static void main(String[] args) {
-        ComparatorInt<Integer> comp = new ComparatorInt<Integer>();
-        MaxArrayDeque<Integer> ad = new MaxArrayDeque<Integer>(comp);
-        for (int i = 0; i < 8 ; ++i) {
-            ad.addFirst(i);
-            System.out.println(ad.max());
-        }
-        ad.printDeque();
+
     }
 }
-abstract class Comparator<T> {
-    public abstract boolean compare(T o1, T o2);
-}
 
-class ComparatorInt<T> extends Comparator<T> {
-    @Override
-    public boolean compare(T o1, T o2) {
-        return (Integer)o1 < (Integer)o2;
-    }
-
-}

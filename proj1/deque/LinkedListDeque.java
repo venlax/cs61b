@@ -1,10 +1,39 @@
 package deque;
 
 
-public class LinkedListDeque<T> implements Deque<T>{
+import java.util.Iterator;
+
+public class LinkedListDeque<T> implements Deque<T> , Iterable<T>{
     private dequeNode<T> first;
     private dequeNode<T> last;
     private int size;
+
+    public class Iteratorll<T> implements Iterator<T> {
+        public dequeNode<T> iterator;
+
+        Iteratorll(){
+            iterator = null;
+        }
+
+        Iteratorll(dequeNode<T> iterator){
+            this.iterator = iterator;
+        }
+
+        @Override
+        public boolean hasNext() {
+            if(iterator == null)return false;
+            dequeNode<T> temp = iterator.next;
+            return temp != null;
+        }
+
+        public T next() {
+            T returnValue = iterator.getVal();
+            iterator = iterator.next;
+            return returnValue;
+        }
+
+
+    }
     public LinkedListDeque() {
         first = null;
         last = null;
@@ -93,7 +122,7 @@ public class LinkedListDeque<T> implements Deque<T>{
     }
 
     public Iterator<T> iterator() {
-        return new Iterator<>(this.first);
+        return new Iteratorll<T>(this.first);
     }
 
     public boolean equals(Object o) {
@@ -101,11 +130,10 @@ public class LinkedListDeque<T> implements Deque<T>{
         LinkedListDeque<?> temp = (LinkedListDeque) o;
         if(this == temp)return true;
         if(this.size() != temp.size)return false;
-        Iterator< ? > iterator = temp.iterator();
-        dequeNode<T> temp_ = first;
-        while(iterator.iterator != null){
-            if(!temp_.getVal().equals(iterator.iterator.getVal()))return false;
-            iterator = iterator.next();
+        Iterator< ? > iteratorofo = temp.iterator();
+        Iterator< ? > iteratorofthis = this.iterator();
+        while (iteratorofthis.hasNext()){
+            if(!iteratorofthis.next().equals(iteratorofo.next()))return false;
         }
         return true;
     }
@@ -123,6 +151,10 @@ public class LinkedListDeque<T> implements Deque<T>{
         temp2.addLast(1);
         temp2.addLast(1);
         System.out.println(temp1.equals(temp2));
+        for (Integer i:
+             temp1) {
+            System.out.println(i);
+        }
     }
 }
 
@@ -141,20 +173,4 @@ class dequeNode<T>{
         return val;
     }
 
-}
-
-class Iterator<T> {
-    public dequeNode<T> iterator;
-
-    Iterator(){
-        iterator = null;
-    }
-
-    Iterator(dequeNode<T> iterator){
-        this.iterator = iterator;
-    }
-
-    Iterator<T> next() {
-        return new Iterator<>(iterator.next);
-    }
 }

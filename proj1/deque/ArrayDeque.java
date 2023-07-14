@@ -1,6 +1,8 @@
 package deque;
 
-public class ArrayDeque<T> implements Deque<T>{
+import java.util.Iterator;
+
+public class ArrayDeque<T> implements Deque<T> , Iterable<T>{
 
     private T[] arr;
 
@@ -8,11 +10,11 @@ public class ArrayDeque<T> implements Deque<T>{
 
     private int frontPos;
     private int lastPos;
-    class Iterator<T>{
+    class Iteratorad<T> implements Iterator<T> {
         private int pos = frontPos;
-        
+        private boolean flag = true;
         public T iter;
-        public Iterator() {
+        public Iteratorad() {
             iter = (T)arr[frontPos];
         }
         private void posNext(){
@@ -25,10 +27,16 @@ public class ArrayDeque<T> implements Deque<T>{
             }
             
         }
+
+        @Override
+        public boolean hasNext() {
+            return flag;
+        }
+
         public T next() {
-            if(pos == lastPos)return null;
-            posNext();
             iter = (T) arr[pos];
+            if(pos == lastPos)flag = false;
+            posNext();
             return iter;
         }
 
@@ -39,7 +47,7 @@ public class ArrayDeque<T> implements Deque<T>{
 
     public Iterator<T> iterator(){
         
-        return new Iterator<T>();
+        return new Iteratorad<T>();
     }
     public ArrayDeque() {
         arr = (T[]) new Object[8];
@@ -179,11 +187,10 @@ public class ArrayDeque<T> implements Deque<T>{
         ArrayDeque<?> temp = (ArrayDeque) o;
         if(this == temp)return true;
         if(this.size() != temp.size)return false;
-        ArrayDeque.Iterator iterator = temp.iterator();
+        Iterator<?> iterator = temp.iterator();
         Iterator<T> iterator2 = this.iterator();
-        if(!iterator2.getVal().equals(iterator.getVal()))return false;
-        while(iterator.next() != null && iterator2.next() != null){
-            if(!iterator2.getVal().equals(iterator.getVal()))return false;
+        while(iterator.hasNext()){
+            if(!iterator2.next().equals(iterator.next()))return false;
         }
         return true;
     }
@@ -193,7 +200,10 @@ public class ArrayDeque<T> implements Deque<T>{
         for (int i = 0; i < 8 ; ++i) {
             ad.addFirst(i);
         }
-        ad.printDeque();
+        for (Integer i:
+             ad) {
+            System.out.println(i);
+        }
     }
 }
 
