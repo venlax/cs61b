@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T> , Iterable<T>{
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     private T[] arr;
 
@@ -10,22 +10,25 @@ public class ArrayDeque<T> implements Deque<T> , Iterable<T>{
 
     private int frontPos;
     private int lastPos;
-    class Iteratorad<T> implements Iterator<T> {
+
+    private class Iteratorad<T> implements Iterator<T> {
         private int pos = frontPos;
         private boolean flag = true;
-        public T iter;
-        public Iteratorad() {
-            iter = (T)arr[frontPos];
+        private T iter;
+
+        Iteratorad() {
+            iter = (T) arr[frontPos];
         }
-        private void posNext(){
+
+        private void posNext() {
             pos++;
-            while(pos < 0){
+            while (pos < 0) {
                 pos += arr.length;
             }
-            if(pos >= arr.length){
+            if (pos >= arr.length) {
                 pos %= arr.length;
             }
-            
+
         }
 
         @Override
@@ -35,20 +38,21 @@ public class ArrayDeque<T> implements Deque<T> , Iterable<T>{
 
         public T next() {
             iter = (T) arr[pos];
-            if(pos == lastPos)flag = false;
+            if (pos == lastPos) flag = false;
             posNext();
             return iter;
         }
 
-        public T getVal(){
+        public T getVal() {
             return iter;
         }
     }
 
-    public Iterator<T> iterator(){
-        
+    public Iterator<T> iterator() {
+
         return new Iteratorad<T>();
     }
+
     public ArrayDeque() {
         arr = (T[]) new Object[8];
         size = 0;
@@ -56,19 +60,12 @@ public class ArrayDeque<T> implements Deque<T> , Iterable<T>{
         lastPos = 0;
     }
 
-    public ArrayDeque(T item){
-        arr = (T[]) new Object[8];
-        arr[0] = item;
-        frontPos = 0;
-        lastPos = 0;
-        size = 1;
-    }
 
-    public void addFirst(T item){
-        if(size == arr.length){
+    public void addFirst(T item) {
+        if (size == arr.length) {
             resize(size * 2);
         }
-        if(frontPos == 0 && lastPos == 0 && size == 0){
+        if (frontPos == 0 && lastPos == 0 && size == 0) {
             arr[0] = item;
             size += 1;
             return;
@@ -80,10 +77,10 @@ public class ArrayDeque<T> implements Deque<T> , Iterable<T>{
     }
 
     public void addLast(T item) {
-        if(size == arr.length){
+        if (size == arr.length) {
             resize(size * 2);
         }
-        if(frontPos == 0 && lastPos == 0 && size == 0){
+        if (frontPos == 0 && lastPos == 0 && size == 0) {
             arr[0] = item;
             size += 1;
             return;
@@ -94,29 +91,33 @@ public class ArrayDeque<T> implements Deque<T> , Iterable<T>{
         size += 1;
     }
 
-    public void adjust(){
-        while(frontPos < 0){
+    private void adjust() {
+        while (frontPos < 0) {
             frontPos += arr.length;
         }
-        if(frontPos >= arr.length){
+        while (lastPos < 0) {
+            lastPos += arr.length;
+        }
+        if (frontPos >= arr.length) {
             frontPos %= arr.length;
         }
-        if(lastPos >= arr.length){
+        if (lastPos >= arr.length) {
             lastPos %= arr.length;
         }
     }
-    public void resize(int size) {
+
+    private void resize(int size) {
         T[] temp = (T[]) new Object[size];
         int count = 0;
         adjust();
-        if(frontPos > lastPos){
+        if (frontPos > lastPos) {
             for (int i = frontPos; i < this.size; i++) {
                 temp[count++] = arr[i];
             }
             for (int i = 0; i <= lastPos; i++) {
                 temp[count++] = arr[i];
             }
-        }else{
+        } else {
             for (int i = frontPos; i < lastPos; i++) {
                 temp[count++] = arr[i];
             }
@@ -126,84 +127,85 @@ public class ArrayDeque<T> implements Deque<T> , Iterable<T>{
         lastPos = count - 1;
         arr = temp;
     }
-    public int size(){
+
+    public int size() {
         return size;
     }
 
 
-    public void printDeque(){
+    public void printDeque() {
         adjust();
-        if(frontPos > lastPos){
+        if (frontPos > lastPos) {
             for (int i = frontPos; i < this.arr.length; i++) {
                 System.out.print(arr[i] + " ");
             }
             for (int i = 0; i <= lastPos; i++) {
                 System.out.print(arr[i]);
-                if(i != lastPos) System.out.print(" ");
-                else{
+                if (i != lastPos) System.out.print(" ");
+                else {
                     System.out.println();
                 }
             }
-        }else{
+        } else {
             for (int i = frontPos; i < lastPos; i++) {
                 System.out.print(arr[i]);
-                if(i != lastPos) System.out.print(" ");
-                else{
+                if (i != lastPos) System.out.print(" ");
+                else {
                     System.out.println();
                 }
             }
         }
     }
-    public T removeFirst(){
-        if(size == 0)return null;
+
+    public T removeFirst() {
+        if (size == 0) return null;
         adjust();
         T result = arr[frontPos];
         arr[frontPos++] = null;
         size -= 1;
-        if(arr.length >= 16 && arr.length - size * 4 > 0){
+        if (arr.length >= 16 && arr.length - size * 4 > 0) {
             resize(size * 2);
         }
         return result;
     }
 
     public T removeLast() {
-        if(size == 0)return null;
+        if (size == 0) return null;
         adjust();
         T result = arr[lastPos];
         arr[lastPos--] = null;
         size -= 1;
-        if(arr.length >= 16 && arr.length - size * 4 > 0){
+        if (arr.length >= 16 && arr.length - size * 4 > 0) {
             resize(size * 2);
         }
         return result;
     }
 
-    public T get(int index){
+    public T get(int index) {
         int temp = (index + frontPos) % this.arr.length;
         return arr[temp];
     }
+
     public boolean equals(Object o) {
-        if(!(o instanceof ArrayDeque))return false;
+        if (!(o instanceof ArrayDeque)) return false;
         ArrayDeque<?> temp = (ArrayDeque) o;
-        if(this == temp)return true;
-        if(this.size() != temp.size)return false;
+        if (this == temp) return true;
+        if (this.size() != temp.size) return false;
         Iterator<?> iterator = temp.iterator();
         Iterator<T> iterator2 = this.iterator();
-        while(iterator.hasNext()){
-            if(!iterator2.next().equals(iterator.next()))return false;
+        while (iterator.hasNext()) {
+            if (!iterator2.next().equals(iterator.next())) return false;
         }
         return true;
     }
-    public static void main(String[] args) {
 
-        ArrayDeque<Integer> ad = new  ArrayDeque<Integer>();
-        for (int i = 0; i < 8 ; ++i) {
-            ad.addFirst(i);
-        }
-        for (Integer i:
-             ad) {
-            System.out.println(i);
-        }
-    }
+//    public static void main(String[] args) {
+//        ArrayDeque<Integer> lld = new ArrayDeque<Integer>();
+//        lld.addFirst(0);
+//        lld.addFirst(1);
+//        lld.addFirst(2);
+//        lld.removeLast();
+//        lld.removeLast();
+//    }
 }
 
