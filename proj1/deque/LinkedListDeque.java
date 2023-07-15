@@ -2,6 +2,7 @@ package deque;
 
 
 import java.util.Iterator;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private dequeNode<T> first;
@@ -149,60 +150,29 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     public boolean equals(Object o) {
-        if (!(o instanceof Deque)) {
-            return false;
+        if (this == o) {
+            return true;
         }
         if (o == null) {
             return false;
         }
-        if(this == o) {
-            return true;
-        }
-        if (o instanceof LinkedListDeque) {
-            LinkedListDeque<?> temp = (LinkedListDeque<?>) o;
-            if (this == temp) {
-                return true;
-            }
-            if (this.size() != temp.size()) {
-                return false;
-            }
-            Iterator<?> iteratorofo = temp.iterator();
-            Iterator<?> iteratorofthis = this.iterator();
-            while (iteratorofthis.hasNext() && iteratorofo.hasNext()) {
-                if (!iteratorofthis.next().equals(iteratorofo.next())) {
-                    return false;
-                }
-            }
-        } else if (o instanceof ArrayDeque){
-            ArrayDeque<?> temp = (ArrayDeque<?>) o;
-            if (this.size() != temp.size()) {
-                return false;
-            }
-            Iterator<?> iteratorofo = temp.iterator();
-            Iterator<?> iteratorofthis = this.iterator();
-            while (iteratorofthis.hasNext() && iteratorofo.hasNext()) {
-                if (!iteratorofthis.next().equals(iteratorofo.next())) {
-                    return false;
-                }
-            }
+        if (!(o instanceof Deque)){
+            return false;
         }
 
+        Deque<T> obj = (Deque<T>)o;
+        if (obj.size() != this.size()){
+            return false;
+        }
+        for(int i = 0; i < obj.size(); i += 1){
+            T itemFromObj =  obj.get(i);
+            T itemFromThis = this.get(i);
+            if (!itemFromObj.equals(itemFromThis)){
+                return false;
+            }
+        }
         return true;
     }
-
-//    public static void main(String[] args) {
-//        LinkedListDeque<Integer> lld = new LinkedListDeque<Integer>();
-//        ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
-//        for (int i = 0; i < 1; ++i) {
-//            lld.addLast(i);
-//            ad.addLast(i);
-//        }
-//
-//        for (Integer i:
-//             lld) {
-//            System.out.println(i);
-//        }
-//    }
 }
 
 class dequeNode<T> {
