@@ -224,14 +224,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return true;
     }
 
-    public static void main(String[] args) {
-        Deque<Integer> lld = new LinkedListDeque<Integer>();
-
-        Deque<Integer> ad = new ArrayDeque<Integer>();
-        lld.addLast(1);
-        ad.addFirst(1);
-        System.out.println(lld.equals(ad));
-        System.out.println(ad.equals(lld));
-    }
+//    public static void main(String[] args) {
+//        Deque<Integer> lld = new LinkedListDeque<Integer>();
+//
+//        Deque<Integer> ad = new ArrayDeque<Integer>();
+//        lld.addLast(1);
+//        ad.addFirst(1);
+//        System.out.println(lld.equals(ad));
+//        System.out.println(ad.equals(lld));
+//    }
 }
 
