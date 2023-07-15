@@ -225,11 +225,19 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
 
 //    public static void main(String[] args) {
-//        Deque<Integer> lld = new LinkedListDeque<Integer>();
+//        LinkedListDeque<Integer> lld = new LinkedListDeque<Integer>();
 //
-//        Deque<Integer> ad = new ArrayDeque<Integer>();
-//        lld.addLast(1);
-//        ad.addFirst(1);
+//        ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
+//
+//        for (int i = 0; i < 100; i++) {
+//            lld.addLast(i);
+//            ad.addLast(i);
+//        }
+//
+//        for (int i = 0; i < 50; i++) {
+//            lld.removeFirst();
+//            ad.removeFirst();
+//        }
 //        System.out.println(lld.equals(ad));
 //        System.out.println(ad.equals(lld));
 //    }

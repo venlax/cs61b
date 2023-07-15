@@ -149,7 +149,15 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     public boolean equals(Object o) {
-        if (!(o instanceof LinkedListDeque) && !(o instanceof ArrayDeque)) return false;
+        if (!(o instanceof Deque)) {
+            return false;
+        }
+        if (o == null) {
+            return false;
+        }
+        if(this == o) {
+            return true;
+        }
         if (o instanceof LinkedListDeque) {
             LinkedListDeque<?> temp = (LinkedListDeque<?>) o;
             if (this == temp) {
@@ -160,7 +168,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             }
             Iterator<?> iteratorofo = temp.iterator();
             Iterator<?> iteratorofthis = this.iterator();
-            while (iteratorofthis.hasNext()) {
+            while (iteratorofthis.hasNext() && iteratorofo.hasNext()) {
                 if (!iteratorofthis.next().equals(iteratorofo.next())) {
                     return false;
                 }
@@ -172,7 +180,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             }
             Iterator<?> iteratorofo = temp.iterator();
             Iterator<?> iteratorofthis = this.iterator();
-            while (iteratorofthis.hasNext()) {
+            while (iteratorofthis.hasNext() && iteratorofo.hasNext()) {
                 if (!iteratorofthis.next().equals(iteratorofo.next())) {
                     return false;
                 }
