@@ -4,15 +4,15 @@ package deque;
 import java.util.Iterator;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
-    private dequeNode<T> first;
-    private dequeNode<T> last;
+    private DequeNode<T> first;
+    private DequeNode<T> last;
     private int size;
-    private class dequeNode<T> {
+    private class DequeNode<T> {
         private T val;
-        private dequeNode<T> front;
-        private dequeNode<T> next;
+        private DequeNode<T> front;
+        private DequeNode<T> next;
 
-        dequeNode(T val, dequeNode<T> front, dequeNode<T> next) {
+        DequeNode(T val, DequeNode<T> front, DequeNode<T> next) {
             this.val = val;
             this.front = front;
             this.next = next;
@@ -24,13 +24,13 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     }
     private class Iteratorll<T> implements Iterator<T> {
-        private dequeNode<T> iterator;
+        private DequeNode<T> iterator;
 
         Iteratorll() {
             iterator = null;
         }
 
-        Iteratorll(dequeNode<T> iterator) {
+        Iteratorll(DequeNode<T> iterator) {
             this.iterator = iterator;
         }
 
@@ -57,10 +57,10 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     public void addFirst(T item) {
         if (first == null) {
-            dequeNode<T> temp = new dequeNode<>(item, null, null);
+            DequeNode<T> temp = new DequeNode<>(item, null, null);
             first = last = temp;
         } else {
-            dequeNode<T> temp = new dequeNode<>(item, null, first);
+            DequeNode<T> temp = new DequeNode<>(item, null, first);
             first.front = temp;
             first = temp;
         }
@@ -69,10 +69,10 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     public void addLast(T item) {
         if (last == null) {
-            dequeNode<T> temp = new dequeNode<>(item, null, null);
+            DequeNode<T> temp = new DequeNode<>(item, null, null);
             first = last = temp;
         } else {
-            dequeNode<T> temp = new dequeNode<>(item, last, null);
+            DequeNode<T> temp = new DequeNode<>(item, last, null);
             last.next = temp;
             last = temp;
         }
@@ -85,7 +85,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     public void printDeque() {
-        dequeNode<T> temp = first;
+        DequeNode<T> temp = first;
         while (temp != null) {
             System.out.print(temp.getVal());
             temp = temp.next;
@@ -106,7 +106,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             return result;
         }
         //TODO
-        dequeNode<T> temp = first.next;
+        DequeNode<T> temp = first.next;
         if (temp != null) {
             first.next = null;
             first = temp;
@@ -135,7 +135,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         if (index >= size || index < 0) {
             return null;
         }
-        dequeNode<T> temp = first;
+        DequeNode<T> temp = first;
         while (index != 0) {
             index--;
             temp = temp.next;
@@ -147,7 +147,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return recursive(index, first);
     }
 
-    private T recursive(int index, dequeNode<T> node) {
+    private T recursive(int index, DequeNode<T> node) {
         if (node == null) {
             return null;
         }
