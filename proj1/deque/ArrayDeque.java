@@ -200,60 +200,38 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     public boolean equals(Object o) {
-        if (!(o instanceof LinkedListDeque) && !(o instanceof ArrayDeque)) return false;
-        if (o instanceof LinkedListDeque) {
-            LinkedListDeque<?> temp = (LinkedListDeque<?>) o;
-            if (this.size() != temp.size()) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+        if (!(o instanceof Deque)){
+            return false;
+        }
+
+        Deque<T> obj = (Deque<T>)o;
+        if (obj.size() != this.size()){
+            return false;
+        }
+        for(int i = 0; i < obj.size(); i += 1){
+            T itemFromObj =  obj.get(i);
+            T itemFromThis = this.get(i);
+            if (!itemFromObj.equals(itemFromThis)){
                 return false;
-            }
-            Iterator<?> iteratorofo = temp.iterator();
-            Iterator<?> iteratorofthis = this.iterator();
-            while (iteratorofthis.hasNext()) {
-                if (!iteratorofthis.next().equals(iteratorofo.next())) {
-                    return false;
-                }
-            }
-        } else {
-            ArrayDeque<?> temp = (ArrayDeque<?>) o;
-            if (this == temp) {
-                return true;
-            }
-            if (this.size() != temp.size()) {
-                return false;
-            }
-            Iterator<?> iteratorofo = temp.iterator();
-            Iterator<?> iteratorofthis = this.iterator();
-            while (iteratorofthis.hasNext()) {
-                if (!iteratorofthis.next().equals(iteratorofo.next())) {
-                    return false;
-                }
             }
         }
         return true;
     }
 
-//    public static void main(String[] args) {
-//        ArrayDeque<Integer> lld = new ArrayDeque<Integer>();
-//        lld.addFirst(0);
-//        lld.addLast(1);
-//        lld.addLast(2);
-//        System.out.println(lld.removeFirst());     //==> 0
-//        lld.addLast(4);
-//        System.out.println(lld.get(0));      //==> 1
-//        lld.addLast(6);
-//        lld.addLast(7);
-//        lld.addLast(8);
-//        System.out.println(lld.get(0));      //==> 1
-//        System.out.println(lld.removeFirst());     //==> 1
-//        lld.addFirst(11);
-//        lld.addLast(12);
-//        System.out.println(lld.removeLast());      //==> 12
-//        lld.addFirst(14);
-//        lld.addLast(15);
-//        System.out.println(lld.get(2));      //==> 2
-//        lld.addFirst(17);
-//        System.out.println(lld.removeFirst());     //==> 17
-//        System.out.println(lld.removeLast());      //==> 15
-//    }
+    public static void main(String[] args) {
+        Deque<Integer> lld = new LinkedListDeque<Integer>();
+
+        Deque<Integer> ad = new ArrayDeque<Integer>();
+        lld.addLast(1);
+        ad.addFirst(1);
+        System.out.println(lld.equals(ad));
+        System.out.println(ad.equals(lld));
+    }
 }
 
