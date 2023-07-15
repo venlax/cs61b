@@ -2,15 +2,29 @@ package deque;
 
 
 import java.util.Iterator;
-import java.util.concurrent.LinkedBlockingDeque;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private dequeNode<T> first;
     private dequeNode<T> last;
     private int size;
+    private class dequeNode<T> {
+        private T val;
+        private dequeNode<T> front;
+        private dequeNode<T> next;
 
+        dequeNode(T val, dequeNode<T> front, dequeNode<T> next) {
+            this.val = val;
+            this.front = front;
+            this.next = next;
+        }
+
+        T getVal() {
+            return val;
+        }
+
+    }
     private class Iteratorll<T> implements Iterator<T> {
-        public dequeNode<T> iterator;
+        private dequeNode<T> iterator;
 
         Iteratorll() {
             iterator = null;
@@ -93,7 +107,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         }
         //TODO
         dequeNode<T> temp = first.next;
-        if(temp != null) {
+        if (temp != null) {
             first.next = null;
             first = temp;
             temp.front = null;
@@ -139,8 +153,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         }
         if (index == 0) {
             return node.getVal();
-        }
-        else {
+        } else {
             return recursive(index - 1, node.next);
         }
     }
@@ -156,18 +169,18 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         if (o == null) {
             return false;
         }
-        if (!(o instanceof Deque)){
+        if (!(o instanceof Deque)) {
             return false;
         }
 
-        Deque<T> obj = (Deque<T>)o;
-        if (obj.size() != this.size()){
+        Deque<T> obj = (Deque<T>) o;
+        if (obj.size() != this.size()) {
             return false;
         }
-        for(int i = 0; i < obj.size(); i += 1){
+        for (int i = 0; i < obj.size(); i += 1) {
             T itemFromObj =  obj.get(i);
             T itemFromThis = this.get(i);
-            if (!itemFromObj.equals(itemFromThis)){
+            if (!itemFromObj.equals(itemFromThis)) {
                 return false;
             }
         }
@@ -175,19 +188,4 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
 }
 
-class dequeNode<T> {
-    private T val;
-    public dequeNode<T> front;
-    public dequeNode<T> next;
 
-    dequeNode(T val, dequeNode<T> front, dequeNode<T> next) {
-        this.val = val;
-        this.front = front;
-        this.next = next;
-    }
-
-    T getVal() {
-        return val;
-    }
-
-}

@@ -33,7 +33,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
         @Override
         public boolean hasNext() {
-            if(size == 0) {
+            if (size == 0) {
                 return false;
             }
             return flag;
@@ -111,8 +111,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         }
     }
 
-    private void resize(int size_) {
-        T[] temp = (T[]) new Object[size_];
+    private void resize(int sizeNew) {
+        T[] temp = (T[]) new Object[sizeNew];
         int count = 0;
         adjust();
         if (frontPos > lastPos) {
@@ -148,8 +148,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
                 System.out.print(arr[i]);
                 if (i != lastPos) {
                     System.out.print(" ");
-                }
-                else {
+                } else {
                     System.out.println();
                 }
             }
@@ -158,8 +157,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
                 System.out.print(arr[i]);
                 if (i != lastPos) {
                     System.out.print(" ");
-                }
-                else {
+                } else {
                     System.out.println();
                 }
             }
@@ -206,18 +204,18 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (o == null) {
             return false;
         }
-        if (!(o instanceof Deque)){
+        if (!(o instanceof Deque)) {
             return false;
         }
 
-        Deque<T> obj = (Deque<T>)o;
-        if (obj.size() != this.size()){
+        Deque<T> obj = (Deque<T>) o;
+        if (obj.size() != this.size()) {
             return false;
         }
-        for(int i = 0; i < obj.size(); i += 1){
+        for (int i = 0; i < obj.size(); i += 1) {
             T itemFromObj =  obj.get(i);
             T itemFromThis = this.get(i);
-            if (!itemFromObj.equals(itemFromThis)){
+            if (!itemFromObj.equals(itemFromThis)) {
                 return false;
             }
         }
