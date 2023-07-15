@@ -21,11 +21,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
         @Override
         public boolean hasNext() {
-            if (iterator == null) {
-                return false;
-            }
-            dequeNode<T> temp = iterator.next;
-            return temp != null;
+            return iterator != null;
         }
 
         public T next() {
@@ -188,26 +184,16 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
 //    public static void main(String[] args) {
 //        LinkedListDeque<Integer> lld = new LinkedListDeque<Integer>();
-//        lld.addFirst(0);
-//        lld.addLast(1);
-//        lld.addLast(2);
-//        System.out.println(lld.removeFirst());     //==> 0
-//        lld.addLast(4);
-//        System.out.println(lld.get(0));      //==> 1
-//        lld.addLast(6);
-//        lld.addLast(7);
-//        lld.addLast(8);
-//        System.out.println(lld.get(0));      //==> 1
-//        System.out.println(lld.removeFirst());     //==> 1
-//        lld.addFirst(11);
-//        lld.addLast(12);
-//        System.out.println(lld.removeLast());      //==> 12
-//        lld.addFirst(14);
-//        lld.addLast(15);
-//        System.out.println(lld.get(2));      //==> 2
-//        lld.addFirst(17);
-//        System.out.println(lld.removeFirst());     //==> 17
-//        System.out.println(lld.removeLast());      //==> 15
+//        ArrayDeque<Integer> ad = new ArrayDeque<Integer>();
+//        for (int i = 0; i < 1; ++i) {
+//            lld.addLast(i);
+//            ad.addLast(i);
+//        }
+//
+//        for (Integer i:
+//             lld) {
+//            System.out.println(i);
+//        }
 //    }
 }
 

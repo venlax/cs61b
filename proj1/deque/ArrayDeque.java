@@ -33,6 +33,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
         @Override
         public boolean hasNext() {
+            if(size == 0) {
+                return false;
+            }
             return flag;
         }
 
