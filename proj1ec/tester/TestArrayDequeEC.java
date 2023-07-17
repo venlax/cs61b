@@ -72,7 +72,8 @@ public class TestArrayDequeEC {
         for (int i = 0; i < length2; ++i) {
             output.append("removeLast()\n");
             assertEquals(output.toString(), sad.removeLast() , ads.removeLast());
-            
+
+            gi
         }
     }
 }
