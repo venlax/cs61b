@@ -1,6 +1,11 @@
 package capers;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Arrays;
+
 import static capers.Utils.*;
 
 /** A repository for Capers 
@@ -18,8 +23,10 @@ public class CapersRepository {
     static final File CWD = new File(System.getProperty("user.dir"));
 
     /** Main metadata folder. */
-    static final File CAPERS_FOLDER = null; // TODO Hint: look at the `join`
+    static final File CAPERS_FOLDER = Utils.join(CWD, ".capers/"); // TODO Hint: look at the `join`
                                             //      function in Utils
+    static final File dogs = Utils.join(CAPERS_FOLDER, "dogs/");
+    static final File story = Utils.join(CAPERS_FOLDER, "story/");
 
     /**
      * Does required filesystem operations to allow for persistence.
@@ -30,8 +37,16 @@ public class CapersRepository {
      *    - dogs/ -- folder containing all of the persistent data for dogs
      *    - story -- file containing the current story
      */
-    public static void setupPersistence() {
-        // TODO
+    public static void setupPersistence() throws IOException {
+        if (!CAPERS_FOLDER.exists()) {
+            CAPERS_FOLDER.mkdir();
+        }
+        if (!dogs.exists()) {
+            dogs.mkdir();
+        }
+        if (!story.exists()) {
+            story.createNewFile();
+        }
     }
 
     /**
@@ -39,8 +54,17 @@ public class CapersRepository {
      * to a file called `story` in the .capers directory.
      * @param text String of the text to be appended to the story
      */
-    public static void writeStory(String text) {
-        // TODO
+    public static void writeStory(String text) throws IOException {
+        Utils.writeContents(story, text + "\n");
+        File store = Utils.join(CAPERS_FOLDER, "/store");
+        if (!store.exists()) {
+            store.createNewFile();
+        }
+        FileWriter fw = new FileWriter(Utils.join(CAPERS_FOLDER, "/store"), true);
+        fw.write(text + "\n");
+        fw.close();
+        byte[] content = Utils.readContents(store);
+        System.out.println(new String(content));
     }
 
     /**
@@ -48,8 +72,10 @@ public class CapersRepository {
      * three non-command arguments of args (name, breed, age).
      * Also prints out the dog's information using toString().
      */
-    public static void makeDog(String name, String breed, int age) {
-        // TODO
+    public static void makeDog(String name, String breed, int age) throws IOException {
+        Dog dog = new Dog(name, breed, age);
+        dog.saveDog();
+        System.out.println(dog.toString());
     }
 
     /**
@@ -58,7 +84,15 @@ public class CapersRepository {
      * Chooses dog to advance based on the first non-command argument of args.
      * @param name String name of the Dog whose birthday we're celebrating.
      */
-    public static void celebrateBirthday(String name) {
+    public static void celebrateBirthday(String name) throws IOException {
         // TODO
+        File DOG = Utils.join(dogs, name);
+        Dog dog;
+        if (!DOG.exists()) {
+            Utils.exitWithError("Dog not exit");
+        }
+        dog = Utils.readObject(DOG, Dog.class);
+        dog.haveBirthday();
+        dog.saveDog();
     }
 }
